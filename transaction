@@ -1,0 +1,205 @@
+Transaction
+ 
+import lombok.Data;
+ 
+import javax.persistence.Entity;
+
+import javax.persistence.Id;
+
+import javax.persistence.ManyToOne;
+
+import java.time.LocalDate;
+ 
+@Data
+
+@Entity
+
+public class Transaction {
+
+    @Id
+
+    private Long id;
+
+    private double amount;
+
+    private LocalDate date;
+ 
+    @ManyToOne
+
+    private Customer customer;
+
+}
+
+ 
+Reward Service
+ 
+import org.springframework.stereotype.Service;
+ 
+@Service
+
+public class RewardService {
+ 
+    public int calculateRewardPoints(double amount) {
+
+        int points = 0;
+ 
+        if (amount > 100) {
+
+            points += (amount - 100) * 2;  // 2 points for every dollar spent over $100
+
+            amount = 100;
+
+        }
+ 
+        if (amount > 50) {
+
+            points += (amount - 50);  // 1 point for every dollar spent between $50 and $100
+
+        }
+ 
+        return points;
+
+    }
+
+}
+
+ 
+Rewards Controller
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.*;
+ 
+import java.time.LocalDate;
+
+import java.util.List;
+
+import java.util.stream.Collectors;
+ 
+@RestController
+
+@RequestMapping("/api/rewards")
+
+public class RewardsController {
+ 
+    @Autowired
+
+    private TransactionRepository transactionRepository;
+ 
+    @Autowired
+
+    private RewardService rewardService;
+ 
+    // Endpoint to get reward points for a customer in a given month
+
+    @GetMapping("/customer/{customerId}/{year}/{month}")
+
+    public int getRewardPointsForCustomerMonth(@PathVariable Long customerId,
+
+                                               @PathVariable int year,
+
+                                               @PathVariable int month) {
+
+        List<Transaction> transactions = transactionRepository.findByCustomerIdAndMonth(customerId, year, month);
+
+        return transactions.stream()
+
+                .mapToInt(transaction -> rewardService.calculateRewardPoints(transaction.getAmount()))
+
+                .sum();
+
+    }
+ 
+    // Endpoint to get the total reward points for a customer
+
+    @GetMapping("/customer/{customerId}/total")
+
+    public int getTotalRewardPointsForCustomer(@PathVariable Long customerId) {
+
+        List<Transaction> transactions = transactionRepository.findByCustomerId(customerId);
+
+        return transactions.stream()
+
+                .mapToInt(transaction -> rewardService.calculateRewardPoints(transaction.getAmount()))
+
+                .sum();
+
+    }
+
+}
+
+ 
+Transaction Repository
+ 
+import org.springframework.data.jpa.repository.JpaRepository;
+ 
+import java.util.List;
+ 
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+ 
+    List<Transaction> findByCustomerIdAndMonth(Long customerId, int year, int month);
+ 
+    List<Transaction> findByCustomerId(Long customerId);
+
+}
+
+ 
+DataLoader
+ 
+import org.springframework.boot.CommandLineRunner;
+
+import org.springframework.stereotype.Component;
+ 
+@Component
+
+public class DataLoader implements CommandLineRunner {
+ 
+    private final TransactionRepository transactionRepository;
+
+    private final CustomerRepository customerRepository;
+ 
+    public DataLoader(TransactionRepository transactionRepository, CustomerRepository customerRepository) {
+
+        this.transactionRepository = transactionRepository;
+
+        this.customerRepository = customerRepository;
+
+    }
+ 
+    @Override
+
+    public void run(String... args) throws Exception {
+
+        // Add sample customers
+
+        Customer customer1 = new Customer();
+
+        customer1.setId(1L);
+
+        customer1.setName("John Doe");
+
+        customerRepository.save(customer1);
+ 
+        Customer customer2 = new Customer();
+
+        customer2.setId(2L);
+
+        customer2.setName("Jane Smith");
+
+        customerRepository.save(customer2);
+ 
+        // Add sample transactions
+
+        transactionRepository.save(new Transaction(1L, 120.0, LocalDate.of(2024, 12, 15), customer1));
+
+        transactionRepository.save(new Transaction(2L, 80.0, LocalDate.of(2024, 12, 16), customer1));
+
+        transactionRepository.save(new Transaction(3L, 150.0, LocalDate.of(2024, 11, 20), customer2));
+
+        transactionRepository.save(new Transaction(4L, 50.0, LocalDate.of(2024, 10, 25), customer2));
+
+    }
+
+}
+
+ 
