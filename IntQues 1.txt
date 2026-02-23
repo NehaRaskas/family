@@ -1,0 +1,101 @@
+Optional Class-> difference between .of() vs .ofNullable()->Optional.of(T) , Optional.ofNullable(T)
+implementation of this keyword
+Final keyword
+parent Exception before child exception
+Employee list ->find first three highest salary by employee names
+view resolver-spring mvc
+suffix and prefix
+interface vs abstract
+git rebase vs merge
+how to resolve git conflicts
+production issues
+how to handle production issue which was not replicate in lower environments
+@Restcontroller
+@autowired
+->code ->when two interfaces having same default method .
+RequestParam vs path varaiable
+dispatch servlet?
+dependency injection and its types?
+disabling the pre existing the server in springboot?
+benefits of microservices architecture in spring boot?
+microservice communication?
+MOM.context in microservices?
+date api in java 8?
+functional interface?
+1.public static void
+main(
+final
+String[] args) { 
+ String test ="Today";   
+test.concat(" is a beautiful day");        
+System.out.println(test); 
+} ->output?
+2.[09:47] Raskas, Neha
+public interface DefaultMethodInterface { 
+    default public void defaultMethod(){ 
+        System.out.println("DefaultMethodInterface"); 
+    } 
+} 
+ 
+public interface DefaultMethodInterface2 { 
+    default public void defaultMethod(){ 
+        System.out.println("DefaultMethodInterface2"); 
+    } 
+} 
+ 
+public class HelloJava8 implements DefaultMethodInterface, DefaultMethodInterface2 { 
+    public static void main(String[] args){ 
+        DefaultMethodInterface defMethIn = new HelloJava8(); 
+        defMethIn.defaultMethod(); 
+    } 
+ 
+    public void defaultMethod(){ 
+        System.out.println("HelloJava8"); 
+    } 
+} ->when we implement both interfaces for one class and calling the default method? what is output?
+
+3.[09:48] Raskas, Neha
+public class ExceptionHandling { 
+    public static void main(String[] args) 
+    { 
+        try 
+        { 
+            //This statement throws NumberFormatException 
+            int i = Integer.parseInt("abc"); 
+        } 
+ 
+        catch(Exception ex) 
+        { 
+            System.out.println("This block handles all exception types"); 
+        } 
+ 
+        catch(NumberFormatException ex) 
+        { 
+            System.out.println("This block handles number format exception types"); 
+        } 
+    } 
+} output?
+
+18/06/2024
+===========
+java 8 features
+what do meant by lambda expression & functional interface
+OOPS Concepts
+Difference between method overloading and method overriding
+Difference between abstraction and encapsulation
+Singleton and write a program implementing singleton
+
+
+1)	String s1 = "Java";  
+	s1.concat("Programming");
+	System.out.println(s1); 
+	output-> s1
+
+2)	List<String> listOfStrings = Arrays.asList("Java", "Python", "C#", "HTML", "Kotlin", "C++", "COBOL", "C");
+	find the length of each word and print the output in ascending order according to the length in 
+	output-> ("C","C#","C++","HTML","Java","COBOL","Kotlin","Python")
+
+
+3)	find the missing number in an array of integers from 1 to n
+	int[] a={1,2,3,5}
+	output-> ?

@@ -1,0 +1,34 @@
+to find 7th highest salry from emp table
+
+frequency of characters
+
+
+
+select salary from   Employee E 
+
+
+
+
+hashmap vs hashtable,
+
+runnable vs callable
+serialization vs deserialization
+
+thread life cycle,
+profiles,
+actuator,
+bean scopes,
+ioc,
+dependency injection,
+how we can handle exception handling in springboot,
+
+JPA mechanism
+delete vs truncate
+entity manager
+@transactional
+spring mvc vs springboot
+aggregate functions
+types of loading (lazy and eager)
+
+dependency injection ways
+design patterns

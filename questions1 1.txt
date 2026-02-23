@@ -1,0 +1,13 @@
+multithreading and its implementation
+difference between equals and hashCode
+when same threads having same hashcode what is the output
+when different threads having same hashcode what is the output
+what is the concept of collision and how is it effected on threads
+thread scheduler and can we priortize threads and in how many ways
+thread and how many ways we can execute a thread
+Runnable interface is a functional interface
+functional interface before java 8 and after java 8
+how can we run a runnable interface and what are the thread methods are involved in runnable interface
+what is functional interface
+write a custom Exception
+
